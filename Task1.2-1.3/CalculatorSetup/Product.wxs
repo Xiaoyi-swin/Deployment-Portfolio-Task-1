@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="CalculatorSetup" Language="1033" Version="1.0.0.0" Manufacturer="SwinburneStudent"
+	UpgradeCode="15EC0992-502F-4766-BDEE-4EEDE3A28A1D">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+		<MediaTemplate EmbedCab="yes" />
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="Calculator" />
+			</Directory>
+		</Directory>
+		<DirectoryRef Id="INSTALLFOLDER">
+			<Component Id="MainExecutable" Guid="15EC0992-502F-4766-BDEE-4EEDE3A28A1D">
+				<File Id="CalculatorEXE" Source="$(var.Calculator.TargetDir)Calculator.exe" KeyPath="yes" />
+			</Component>
+			<Component Id="CalculatorAssemblyComponent" Guid="*">
+				<File Id="CalculatorAssemblyFile" Source="$(var.Calculator.TargetDir)Calculator.dll" KeyPath="yes" />
+			</Component>
+			<Component Id="CalculatorDepsComponent" Guid="*">
+				<File Id="CalculatorDepsFile" Source="$(var.Calculator.TargetDir)Calculator.deps.json" KeyPath="yes" />
+			</Component>
+			<Component Id="CalculatorRuntimeConfigComponent" Guid="*">
+				<File Id="CalculatorRuntimeConfigFile" Source="$(var.Calculator.TargetDir)Calculator.runtimeconfig.json" KeyPath="yes" />
+			</Component>
+			<Component Id="NewtonsoftJsonComponent" Guid="*">
+				<File Id="NewtonsoftJsonFile" Source="$(var.Calculator.TargetDir)Newtonsoft.Json.dll" KeyPath="yes" />
+			</Component>
+			<Component Id="HumanizerComponent" Guid="*">
+				<File Id="HumanizerFile" Source="$(var.Calculator.TargetDir)Humanizer.dll" KeyPath="yes" />
+			</Component>
+		</DirectoryRef>
+		<Feature Id="ProductFeature" Title="CalculatorSetup" Level="1">
+			<ComponentRef Id="MainExecutable" />
+			<ComponentRef Id="CalculatorAssemblyComponent" />
+			<ComponentRef Id="CalculatorDepsComponent" />
+			<ComponentRef Id="CalculatorRuntimeConfigComponent" />
+			<ComponentRef Id="NewtonsoftJsonComponent" />
+			<ComponentRef Id="HumanizerComponent" />
+		</Feature>
+	</Product>
+</Wix>
